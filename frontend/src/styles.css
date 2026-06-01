@@ -1,0 +1,290 @@
+:root {
+  color: #261915;
+  background: #fffaf1;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+.button-link {
+  border: 0;
+  border-radius: 8px;
+  background: #cf3b24;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+button:disabled,
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+button.secondary,
+.secondary {
+  background: #f2d7b8;
+  color: #4a2219;
+}
+
+button.danger {
+  background: #7a1e17;
+}
+
+.topbar {
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #ecd8c0;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 4vw, 48px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.brand {
+  color: #cf3b24;
+  font-size: 24px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.nav a,
+.link-button {
+  background: transparent;
+  color: #4a2219;
+  min-height: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.nav a.active {
+  color: #cf3b24;
+  font-weight: 700;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1160px;
+  padding: 28px 16px;
+}
+
+.narrow {
+  max-width: 560px;
+}
+
+.hero {
+  background: #f9dfb6;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  padding: clamp(28px, 6vw, 64px);
+}
+
+.hero h1 {
+  font-size: clamp(36px, 7vw, 64px);
+  margin: 0 0 10px;
+}
+
+.eyebrow,
+.category {
+  color: #a9321f;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.toolbar {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 2fr 1fr;
+  margin-bottom: 20px;
+}
+
+.search,
+.filter,
+.form label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid #d7b99a;
+  border-radius: 8px;
+  font: inherit;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.pizza-card {
+  background: #fff;
+  border: 1px solid #ecd8c0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pizza-card img,
+.detail > img {
+  aspect-ratio: 3 / 2;
+  background: #f9dfb6;
+  object-fit: cover;
+  width: 100%;
+}
+
+.pizza-card-body {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+}
+
+.pizza-card h2,
+.pizza-card p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pagination,
+.summary {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.detail {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+}
+
+.price {
+  display: block;
+  font-size: 28px;
+  margin: 18px 0;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form-error {
+  color: #a71f15;
+  font-weight: 700;
+}
+
+.success {
+  color: #26713b;
+  font-weight: 700;
+}
+
+.cart-item,
+.list-row,
+.review {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ecd8c0;
+  border-radius: 8px;
+  display: grid;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 14px;
+}
+
+.cart-item {
+  grid-template-columns: 1fr 100px 120px auto;
+}
+
+.list-row {
+  color: inherit;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-decoration: none;
+}
+
+.status-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  margin: 18px 0;
+}
+
+.status-list span {
+  background: #ead7c2;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.status-list .done {
+  background: #cf3b24;
+  color: #fff;
+}
+
+.plain-list {
+  line-height: 1.8;
+}
+
+@media (max-width: 760px) {
+  .topbar,
+  .toolbar,
+  .detail,
+  .cart-item,
+  .list-row {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    display: grid;
+  }
+
+  .summary,
+  .pagination {
+    justify-content: flex-start;
+  }
+}

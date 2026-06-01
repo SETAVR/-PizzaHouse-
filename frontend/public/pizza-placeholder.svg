@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-label="Pizza">
+  <rect width="900" height="600" fill="#fff4dc"/>
+  <circle cx="450" cy="315" r="210" fill="#d88938"/>
+  <circle cx="450" cy="315" r="178" fill="#ffd36a"/>
+  <circle cx="374" cy="240" r="24" fill="#c93427"/>
+  <circle cx="520" cy="248" r="25" fill="#c93427"/>
+  <circle cx="570" cy="365" r="24" fill="#c93427"/>
+  <circle cx="410" cy="405" r="26" fill="#c93427"/>
+  <circle cx="455" cy="322" r="24" fill="#c93427"/>
+  <path d="M450 315 L450 110 A205 205 0 0 1 628 212 Z" fill="#ffe08a" opacity=".72"/>
+  <path d="M450 315 L628 212 A205 205 0 0 1 650 420 Z" fill="#f6c65b" opacity=".72"/>
+  <path d="M450 315 L650 420 A205 205 0 0 1 275 460 Z" fill="#ffe08a" opacity=".72"/>
+  <path d="M450 315 L275 460 A205 205 0 0 1 450 110 Z" fill="#f6c65b" opacity=".72"/>
+  <text x="450" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" fill="#7f2d1d">PizzaHouse</text>
+</svg>
