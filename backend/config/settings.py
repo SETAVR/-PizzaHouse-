@@ -1,3 +1,4 @@
+import importlib.util
 from pathlib import Path
 
 
@@ -8,7 +9,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 INSTALLED_APPS = [
-    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -21,6 +21,9 @@ INSTALLED_APPS = [
     "users",
     "pizzeria",
 ]
+
+if importlib.util.find_spec("daphne"):
+    INSTALLED_APPS.insert(0, "daphne")
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
