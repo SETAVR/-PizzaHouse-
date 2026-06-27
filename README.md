@@ -391,5 +391,23 @@ cd backend
 python manage.py test pizzeria
 ```
 
+Расширенный запуск с измерением покрытия:
+
+```powershell
+cd backend
+python -m coverage erase
+python -m coverage run manage.py test users pizzeria
+python -m coverage report -m
+```
+
+Контрольный результат: 11 успешно выполненных тестов и 86% покрытия прикладного backend-кода. Подробности приведены в `docs/testing_coverage.md`.
+
+## Интерактивная документация API
+
+После запуска backend доступны:
+
+- Swagger UI: `http://localhost:8000/api/docs/`;
+- ReDoc: `http://localhost:8000/api/redoc/`;
+- OpenAPI schema: `http://localhost:8000/api/schema/`.
 
 

@@ -51,6 +51,10 @@ class FavoriteToggleSerializer(serializers.Serializer):
     pizza_id = serializers.IntegerField()
 
 
+class FavoriteToggleResponseSerializer(serializers.Serializer):
+    is_favorite = serializers.BooleanField()
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
     pizza_title = serializers.CharField(source="pizza.title", read_only=True)
 

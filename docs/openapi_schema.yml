@@ -1,0 +1,1074 @@
+openapi: 3.0.3
+info:
+  title: PizzaHouse API
+  version: 1.0.0
+  description: REST API учебного веб-приложения пиццерии PizzaHouse.
+paths:
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/auth/profile/:
+    get:
+      operationId: auth_profile_retrieve
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+    put:
+      operationId: auth_profile_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Profile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+    patch:
+      operationId: auth_profile_partial_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+          description: ''
+  /api/auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/categories/:
+    get:
+      operationId: categories_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - categories
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: ''
+    post:
+      operationId: categories_create
+      tags:
+      - categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/categories/{id}/:
+    get:
+      operationId: categories_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - categories
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: categories_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: categories_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    delete:
+      operationId: categories_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - categories
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/favorites/my/:
+    get:
+      operationId: favorites_my_list
+      tags:
+      - favorites
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Favorite'
+          description: ''
+  /api/favorites/toggle/:
+    post:
+      operationId: favorites_toggle_create
+      tags:
+      - favorites
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FavoriteToggle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FavoriteToggle'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FavoriteToggle'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoriteToggleResponse'
+          description: ''
+  /api/orders/:
+    post:
+      operationId: orders_create
+      tags:
+      - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/orders/{id}/:
+    get:
+      operationId: orders_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/orders/{id}/pay/:
+    post:
+      operationId: orders_pay_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/orders/my/:
+    get:
+      operationId: orders_my_list
+      tags:
+      - orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+          description: ''
+  /api/pizzas/:
+    get:
+      operationId: pizzas_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - pizzas
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPizzaList'
+          description: ''
+    post:
+      operationId: pizzas_create
+      tags:
+      - pizzas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+  /api/pizzas/{id}/:
+    get:
+      operationId: pizzas_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+    put:
+      operationId: pizzas_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+    patch:
+      operationId: pizzas_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPizza'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPizza'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPizza'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+    delete:
+      operationId: pizzas_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/pizzas/{id}/reviews/:
+    get:
+      operationId: pizzas_reviews_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+    post:
+      operationId: pizzas_reviews_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pizza.
+        required: true
+      tags:
+      - pizzas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Pizza'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pizza'
+          description: ''
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        is_active:
+          type: boolean
+      required:
+      - id
+      - slug
+      - title
+    Favorite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        pizza:
+          allOf:
+          - $ref: '#/components/schemas/Pizza'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - pizza
+    FavoriteToggle:
+      type: object
+      properties:
+        pizza_id:
+          type: integer
+      required:
+      - pizza_id
+    FavoriteToggleResponse:
+      type: object
+      properties:
+        is_favorite:
+          type: boolean
+      required:
+      - is_favorite
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+          maxLength: 30
+        address:
+          type: string
+          maxLength: 255
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        is_paid:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
+      required:
+      - address
+      - created_at
+      - id
+      - items
+      - phone
+      - updated_at
+    OrderCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+          maxLength: 30
+        address:
+          type: string
+          maxLength: 255
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderCreateItem'
+          writeOnly: true
+      required:
+      - address
+      - id
+      - items
+      - phone
+    OrderCreateItem:
+      type: object
+      properties:
+        pizza_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+      required:
+      - pizza_id
+      - quantity
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        pizza:
+          type: integer
+        pizza_title:
+          type: string
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+      required:
+      - id
+      - pizza
+      - pizza_title
+      - price
+    PaginatedCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    PaginatedPizzaList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pizza'
+    PatchedCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 120
+        slug:
+          type: string
+          maxLength: 140
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        is_active:
+          type: boolean
+    PatchedPizza:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 160
+        slug:
+          type: string
+          maxLength: 180
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+        image:
+          type: string
+          format: uri
+          nullable: true
+        is_available:
+          type: boolean
+        category:
+          type: integer
+        category_title:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+        email:
+          type: string
+          format: email
+          title: Адрес электронной почты
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 30
+        address:
+          type: string
+          maxLength: 255
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        bio:
+          type: string
+    Pizza:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 160
+        slug:
+          type: string
+          maxLength: 180
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+        image:
+          type: string
+          format: uri
+          nullable: true
+        is_available:
+          type: boolean
+        category:
+          type: integer
+        category_title:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - category_title
+      - created_at
+      - description
+      - id
+      - price
+      - slug
+      - title
+      - updated_at
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+        email:
+          type: string
+          format: email
+          title: Адрес электронной почты
+          maxLength: 254
+        phone:
+          type: string
+          maxLength: 30
+        address:
+          type: string
+          maxLength: 255
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+        bio:
+          type: string
+      required:
+      - id
+      - username
+    Register:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Адрес электронной почты
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        phone:
+          type: string
+          maxLength: 30
+        address:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - password
+      - username
+    StatusEnum:
+      enum:
+      - created
+      - paid
+      - cooking
+      - baking
+      - delivering
+      - completed
+      type: string
+      description: |-
+        * `created` - Создан
+        * `paid` - Оплачен
+        * `cooking` - Готовится
+        * `baking` - Выпекается
+        * `delivering` - Передан курьеру
+        * `completed` - Доставлен
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

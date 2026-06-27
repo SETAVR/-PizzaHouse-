@@ -30,6 +30,10 @@ class Pizza(models.Model):
 
     class Meta:
         ordering = ["title"]
+        indexes = [
+            models.Index(fields=["title"], name="pizza_title_idx"),
+            models.Index(fields=["category", "is_available"], name="pizza_cat_avail_idx"),
+        ]
 
     def __str__(self):
         return self.title
@@ -55,6 +59,10 @@ class Order(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["user", "-created_at"], name="order_user_created_idx"),
+            models.Index(fields=["status"], name="order_status_idx"),
+        ]
 
     def __str__(self):
         return f"Order #{self.pk}"
@@ -79,6 +87,9 @@ class Review(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["pizza", "-created_at"], name="review_pizza_date_idx"),
+        ]
 
     def __str__(self):
         return f"{self.pizza} review by {self.author}"

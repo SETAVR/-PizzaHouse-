@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 
 from .models import Category, Favorite, Order, Pizza, Review
 from .permissions import IsAdminOrReadOnly
@@ -9,6 +10,7 @@ from .serializers import (
     CategorySerializer,
     FavoriteSerializer,
     FavoriteToggleSerializer,
+    FavoriteToggleResponseSerializer,
     OrderCreateSerializer,
     OrderSerializer,
     PizzaSerializer,
@@ -51,6 +53,7 @@ class PizzaViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(responses=FavoriteSerializer(many=True))
 @api_view(["GET"])
 @permission_classes([permissions.IsAuthenticated])
 def my_favorites(request):
@@ -58,6 +61,10 @@ def my_favorites(request):
     return Response(FavoriteSerializer(favorites, many=True).data)
 
 
+@extend_schema(
+    request=FavoriteToggleSerializer,
+    responses=FavoriteToggleResponseSerializer,
+)
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def toggle_favorite(request):
@@ -70,6 +77,7 @@ def toggle_favorite(request):
     return Response({"is_favorite": created})
 
 
+@extend_schema(responses=OrderSerializer(many=True))
 @api_view(["GET"])
 @permission_classes([permissions.IsAuthenticated])
 def my_orders(request):
@@ -77,6 +85,7 @@ def my_orders(request):
     return Response(OrderSerializer(orders, many=True).data)
 
 
+@extend_schema(request=OrderCreateSerializer, responses=OrderSerializer)
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_order(request):
@@ -86,6 +95,7 @@ def create_order(request):
     return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(responses=OrderSerializer)
 @api_view(["GET"])
 @permission_classes([permissions.IsAuthenticated])
 def order_detail(request, pk):
@@ -93,6 +103,7 @@ def order_detail(request, pk):
     return Response(OrderSerializer(order).data)
 
 
+@extend_schema(request=None, responses=OrderSerializer)
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def pay_order(request, pk):

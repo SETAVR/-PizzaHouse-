@@ -1,0 +1,12 @@
+[run]
+source = users,pizzeria
+
+[report]
+show_missing = True
+omit =
+    */tests.py
+    */migrations/*
+    */admin.py
+    */management/*
+    */apps.py
+    */__init__.py
